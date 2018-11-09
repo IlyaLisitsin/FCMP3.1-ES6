@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Font';
+  src: url(https://assets.static-upwork.com/fonts/2.2.0/gotham-regular.woff2);
+}
+
+body {
+  background: #f2f2f2;
+  font-family: "Font", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.42857;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  word-break: break-word;
+  color: #222;
+  font-family: inherit;
+}
+
+.container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  @media (min-width: 1200px) {
+    width: 990px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}

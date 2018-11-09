@@ -1,0 +1,35 @@
+{
+  "name": "task-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "build": "webpack",
+    "client": "webpack-dev-server --config webpack.config.js --inline --hot",
+    "start": "npm run client"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Ilya",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-plugin-webpack-alias": "^2.1.2",
+    "css-loader": "^0.28.11",
+    "extract-loader": "^2.0.1",
+    "file-loader": "^1.1.11",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.3",
+    "webpack": "4.19.1",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "2.1.4"
+  }
+}
