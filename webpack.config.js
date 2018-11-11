@@ -37,6 +37,10 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
             }
         ]
     },
@@ -58,6 +62,7 @@ module.exports = {
         alias: {
             'js': __dirname + '/src/js',
             'header': __dirname + '/src/js/header',
+            'news-card': __dirname + '/src/js/news-card',
         },
         extensions: ['.scss', '.js']
     }
