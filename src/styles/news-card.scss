@@ -4,6 +4,8 @@
   background: rgb(255, 255, 255);
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 300;
 
   &:hover {
     box-shadow: none;
@@ -36,6 +38,10 @@
   .description {
     font-size: 13px;
     margin-top: 10px;
+  }
+
+  .description {
+    max-width: 750px;
   }
 
   .slider {

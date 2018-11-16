@@ -22,12 +22,17 @@
     "babel-loader": "^7.1.4",
     "babel-plugin-webpack-alias": "^2.1.2",
     "css-loader": "^0.28.11",
+    "es6-shim": "^0.35.4",
+    "exports-loader": "^0.7.0",
     "extract-loader": "^2.0.1",
     "file-loader": "^1.1.11",
+    "imports-loader": "^0.8.0",
     "node-sass": "^4.9.0",
+    "promise-polyfill": "^8.1.0",
     "sass-loader": "^7.0.3",
     "webpack": "4.19.1",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "webpack-cli": "2.1.4"

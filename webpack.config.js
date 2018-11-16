@@ -17,6 +17,9 @@ module.exports = {
                 test: /\.js$/,
                 use: {
                     loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015']
+                    }
                 }
             },
             {
@@ -49,6 +52,9 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin,
+        new webpack.ProvidePlugin({
+            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+        })
     ],
     devServer: {
         contentBase: './public',

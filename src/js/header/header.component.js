@@ -1,6 +1,6 @@
 import NewsCard from 'news-card'
 import headerTpl from './header.tpl'
-import newsCard from "js/news-card/news-card.tpl";
+import 'whatwg-fetch';
 
 export default class Header {
     constructor() {
@@ -38,11 +38,9 @@ export default class Header {
         const sourcesQuery = this.headerDomModel.querySelector('input[name="sources"]:checked').value || 'google-news';
         const url = `${this.ENDPOINT}?q=${textQuery}&language=${languageQuery}&sources=${sourcesQuery}&pageSize=10&apiKey=${this.API_KEY}`;
 
-        const req = new Request(url)
-
         document.querySelector('.spinner').classList.remove('hide')
         document.querySelector('.no-results-caption').classList.add('hide')
-        fetch(req).then(res => res.json()).then(({ articles }) => {
+        fetch(url).then(res => res.json()).then(({ articles }) => {
             document.querySelector('.spinner').classList.toggle('hide')
             this.renderCardList(articles)
         })
