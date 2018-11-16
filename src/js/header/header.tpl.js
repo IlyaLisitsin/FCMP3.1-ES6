@@ -24,7 +24,7 @@ const headerTpl = () => `
                     <label for="le-monde">Le Monde</label>
                 </div>
                 <div>
-                    <input type="radio" id="lenta" name="sources" value="lenta">
+                    <input type="radio" checked id="lenta" name="sources" value="lenta">
                     <label for="lenta">Lenta</label>
                 </div>
             </div>
@@ -43,7 +43,6 @@ const headerTpl = () => `
                     <input type="radio" id="ru" checked name="language" value="ru">
                     <label for="ru">Russian</label>
                 </div>
-
             </div>
         </div>
     </div>

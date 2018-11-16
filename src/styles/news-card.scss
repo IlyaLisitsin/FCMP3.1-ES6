@@ -3,6 +3,7 @@
   padding: 20px 30px;
   background: rgb(255, 255, 255);
   display: flex;
+  align-items: center;
 
   &:hover {
     box-shadow: none;
@@ -35,5 +36,20 @@
   .description {
     font-size: 13px;
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .news-card {
+    flex-direction: column;
+  }
+
+  .news-card .news-image {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .news-card .title {
+    margin-bottom: 10px;
   }
 }
