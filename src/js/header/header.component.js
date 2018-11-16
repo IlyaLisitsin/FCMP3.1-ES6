@@ -38,44 +38,49 @@ export default class Header {
         const sourcesQuery = this.headerDomModel.querySelector('input[name="sources"]:checked').value || 'google-news';
         const url = `${this.ENDPOINT}?q=${textQuery}&language=${languageQuery}&sources=${sourcesQuery}&pageSize=10&apiKey=${this.API_KEY}`;
 
-        const req = new Request(url);
+        const req = new Request(url)
 
-        document.querySelector('.spinner').classList.remove('hide');
-        document.querySelector('.no-results-caption').classList.add('hide');
+        document.querySelector('.spinner').classList.remove('hide')
+        document.querySelector('.no-results-caption').classList.add('hide')
         fetch(req).then(res => res.json()).then(({ articles }) => {
-            document.querySelector('.spinner').classList.toggle('hide');
-            this.renderCardList(articles);
-        });
+            document.querySelector('.spinner').classList.toggle('hide')
+            this.renderCardList(articles)
+        })
     }
 
     renderCardList(articlesCollection) {
-        const newsListSection = document.querySelector('.news-list');
-        newsListSection.innerHTML = '';
+        const newsListSection = document.querySelector('.news-list')
+        newsListSection.innerHTML = ''
 
         if (!articlesCollection.length) {
-            document.querySelector('.no-results-caption').classList.remove('hide');
-            return;
+            document.querySelector('.no-results-caption').classList.remove('hide')
+            return
         }
 
-        document.querySelector('.no-results-caption').classList.add('hide');
-        articlesCollection.map(({ author, title, publishedAt, source: { name }, description, url, urlToImage }) => newsListSection.innerHTML += newsCard({
-            author: author || '',
-            title: title || '',
-            publishedAt: this.extractDate(publishedAt) || '',
-            name: name || '',
-            description: description || '',
-            url: url || '',
-            urlToImage: urlToImage || this.BLANK_IMAGE_URL
-        }));
+        document.querySelector('.no-results-caption').classList.add('hide')
+        articlesCollection.map(({ author, title, publishedAt, source: { name }, description, url, urlToImage }) =>
+            newsListSection.innerHTML += NewsCard({
+                author: author || '',
+                title: title || '',
+                publishedAt: this.extractDate(publishedAt) || '',
+                name: name || '',
+                description: description || '',
+                url: url || '',
+                urlToImage: urlToImage || this.BLANK_IMAGE_URL
+            }))
     }
 
     extractDate(dateStr) {
-        if (dateStr) return new Date(dateStr).toLocaleDateString().replace(/\//g, '-');
-        return false;
+        if (dateStr) return new Date(dateStr).toLocaleDateString().replace(/\//g, '-')
+        return false
     }
 
     bindEventListeners() {
-        Object.keys(this.elementsMap).map(domElKey => this.elementsMap[domElKey].element.addEventListener(this.elementsMap[domElKey].event, this.elementsMap[domElKey].callback));
+        Object.keys(this.elementsMap).map(domElKey =>
+            this.elementsMap[domElKey].element.addEventListener(
+                this.elementsMap[domElKey].event,
+                this.elementsMap[domElKey].callback
+            ))
     }
 
     create() {
