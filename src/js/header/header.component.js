@@ -40,10 +40,29 @@ export default class Header {
 
         document.querySelector('.spinner').classList.remove('hide')
         document.querySelector('.no-results-caption').classList.add('hide')
-        fetch(url).then(res => res.json()).then(({ articles }) => {
-            document.querySelector('.spinner').classList.toggle('hide')
-            this.renderCardList(articles)
-        })
+
+        // fetch(url).then(res => res.json()).then(({ articles }) => {
+        //     document.querySelector('.spinner').classList.toggle('hide')
+        //     this.renderCardList(articles)
+        // })
+
+        const bindedRenderCardList = this.renderCardList.bind(this)
+        let response = null;
+
+        async function request() {
+            try {
+                let response = await fetch(url).then(res => res.json()).then(({ articles }) => {
+                    document.querySelector('.spinner').classList.toggle('hide')
+                    response = articles
+                    bindedRenderCardList(response)
+                })
+            } catch (e) {
+                response = []
+                bindedRenderCardList(response)
+            }
+        }
+
+        request()
     }
 
     renderCardList(articlesCollection) {
