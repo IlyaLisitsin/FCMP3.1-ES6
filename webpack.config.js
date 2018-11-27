@@ -1,14 +1,46 @@
 const webpack = require('webpack');
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("mini-css-extract-plugin");
+
 
 module.exports = {
     entry: {
         'main.js': __dirname + '/src/js/main',
-        'main-style.css': __dirname + '/src/styles/main.scss'
+        'common': __dirname + '/src/styles/common.scss',
+        'header': __dirname + '/src/styles/header.scss',
+        'news-card': __dirname + '/src/styles/news-card.scss',
+        'spinner': __dirname + '/src/styles/spinner.scss'
     },
+    // entry: path.resolve(__dirname, 'src/js/main.js'),
     output: {
-        path: __dirname +  '/public',
-        publicPath: '/',
-        filename: '[name]'
+        path: path.resolve(__dirname, 'dist'),
+        // filename: '[name].[hash].js',
+        filename: '[name].js',
+        chunkFilename: "[name]"
+    },
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            chunks(module) {
+                console.log(21323, module)
+            },
+            maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        // get the name. E.g. node_modules/packageName/not/this/part.js
+                        // or node_modules/packageName
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+                        // npm package names are URL-safe, but some servers don't like @ symbols
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
+            },
+        },
     },
     watch: true,
     module: {
@@ -28,7 +60,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: 'main.css'
+                            name: '[name].css'
                         }
                     },
                     { loader: 'extract-loader' },
@@ -47,14 +79,16 @@ module.exports = {
             }
         ]
     },
-    optimization: {
-        minimize: false
-    },
     plugins: [
         new webpack.HotModuleReplacementPlugin,
+        // new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({
             'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
-        })
+        }),
+        new HTMLWebpackPlugin({
+            template: __dirname + '/public/index.html'
+        }),
+        new ExtractTextPlugin(__dirname + '/[name].css'),
     ],
     devServer: {
         contentBase: './public',
