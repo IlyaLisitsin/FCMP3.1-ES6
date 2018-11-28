@@ -16,15 +16,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         // filename: '[name].[hash].js',
-        filename: '[name].js',
-        chunkFilename: "[name]"
+        filename: '[name].js'
     },
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-            chunks(module) {
-                console.log(21323, module)
-            },
+            chunks: 'all',
             maxInitialRequests: Infinity,
             minSize: 0,
             cacheGroups: {
@@ -88,7 +85,7 @@ module.exports = {
         new HTMLWebpackPlugin({
             template: __dirname + '/public/index.html'
         }),
-        new ExtractTextPlugin(__dirname + '/[name].css'),
+        new ExtractTextPlugin(__dirname + '/css/[name].css'),
     ],
     devServer: {
         contentBase: './public',
