@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "client": "webpack-dev-server --config webpack.config.js --inline --hot",
-    "start": "npm run client"
+    "start": "npm run client",
+    "dev": "webpack-dev-server --config webpack.config.js --mode development --inline --hot",
+    "prod": "webpack-dev-server --config webpack.config.js --mode production --inline --hot"
   },
   "repository": {
     "type": "git",
