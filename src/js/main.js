@@ -1,12 +1,14 @@
-import Header from 'header'
 import Promise from 'promise-polyfill';
 import 'babel-core/register'
-import 'babel-polyfill'
+// import 'babel-polyfill'
+
+import('../styles/common.scss')
+
 
 if (!window.Promise) {
     window.Promise = Promise;
 }
 
 (function () {
-    new Header().create()
+    import('header').then(Header => new Header.default().create())
 })()

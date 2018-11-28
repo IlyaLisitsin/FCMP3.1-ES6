@@ -1,6 +1,9 @@
-import NewsCard from 'news-card'
+// import NewsCard from 'news-card'
 import headerTpl from './header.tpl'
+let NewsCard = null;
 import 'whatwg-fetch';
+
+import('news-card').then(NewsCardImport => NewsCard = NewsCardImport.default)
 
 export default class Header {
     constructor() {

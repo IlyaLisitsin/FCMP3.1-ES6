@@ -1,3 +1,5 @@
+import('../../styles/header.scss')
+
 const headerTpl = () => `
     <div class="header-content">
         <div class="input-group">
