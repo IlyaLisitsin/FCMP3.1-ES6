@@ -6,7 +6,6 @@ module.exports = (env, arg) => {
     const isProd = mode === 'production';
     const isDev = mode === 'development';
 
-    console.log(2133, isProd)
     return{
         entry: {
             'main.js': __dirname + '/src/js/main',
