@@ -75,7 +75,7 @@ export default class Header {
         }
 
         document.querySelector('.no-results-caption').classList.add('hide')
-        articlesCollection.map(({ author, title, publishedAt, source: { name }, description, url, urlToImage }) =>
+        import('../../styles/news-card.scss').then(() => articlesCollection.map(({ author, title, publishedAt, source: { name }, description, url, urlToImage }) =>
             newsListSection.innerHTML += NewsCard({
                 author: author || '',
                 title: title || '',
@@ -84,7 +84,7 @@ export default class Header {
                 description: description || '',
                 url: url || '',
                 urlToImage: urlToImage || this.BLANK_IMAGE_URL
-            }))
+            })))
     }
 
     extractDate(dateStr) {

@@ -1,20 +1,24 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, arg) => {
     const { mode } = arg;
 
     const isProd = mode === 'production';
-    const isDev = mode === 'development';
 
     return{
         entry: {
-            'main.js': __dirname + '/src/js/main',
-            'main-style.css': __dirname + '/src/styles/main.scss'
+            'main': __dirname + '/src/js/main',
         },
         output: {
             path: __dirname +  '/public',
-            publicPath: '/',
-            filename: '[name]'
+            publicPath: './',
+            chunkFilename: '[name].js',
+            filename: '[name].js'
+        },
+        optimization: {
+            minimize: isProd
         },
         watch: true,
         module: {
@@ -30,20 +34,14 @@ module.exports = (env, arg) => {
                 },
                 {
                     test: /\.scss$/,
-                    use: [
+                    use:  [
+                        'style-loader',
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        ...(isProd ? ['postcss-loader'] : []),
+                        'sass-loader',
                         {
-                            loader: 'file-loader',
-                            options: {
-                                name: 'main.css'
-                            }
-                        },
-                        { loader: 'extract-loader' },
-                        { loader: 'css-loader' },
-                        {
-                            loader: 'sass-loader',
-                            options: {
-                                includePaths: ['./node_modules']
-                            }
+                            loader: "./custom-loader.js"
                         }
                     ]
                 },
@@ -53,14 +51,19 @@ module.exports = (env, arg) => {
                 }
             ]
         },
-        optimization: {
-            minimize: isProd,
-        },
         plugins: [
             new webpack.HotModuleReplacementPlugin,
             new webpack.ProvidePlugin({
                 'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
-            })
+            }),
+            new MiniCssExtractPlugin({
+                filename: '[name].css',
+            }),
+            new HtmlWebpackPlugin({
+                inject: true,
+                template: __dirname + '/src/index.html',
+                filename: 'index.html'
+            }),
         ],
         devServer: {
             contentBase: './public',
