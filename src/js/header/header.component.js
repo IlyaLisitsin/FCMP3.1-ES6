@@ -1,5 +1,6 @@
 import NewsCard from 'news-card'
 import headerTpl from './header.tpl'
+import responseFactory from '../response.factory'
 import 'whatwg-fetch';
 
 export default class Header {
@@ -36,7 +37,6 @@ export default class Header {
         const textQuery = this.headerDomModel.querySelector('#header-input').value || 'news';
         const languageQuery = this.headerDomModel.querySelector('input[name="language"]:checked').value || 'en';
         const sourcesQuery = this.headerDomModel.querySelector('input[name="sources"]:checked').value || 'google-news';
-        const url = `${this.ENDPOINT}?q=${textQuery}&language=${languageQuery}&sources=${sourcesQuery}&pageSize=10&apiKey=${this.API_KEY}`;
 
         document.querySelector('.spinner').classList.remove('hide')
         document.querySelector('.no-results-caption').classList.add('hide')
@@ -51,7 +51,14 @@ export default class Header {
 
         async function request() {
             try {
-                let response = await fetch(url).then(res => res.json()).then(({ articles }) => {
+                let response = await responseFactory({
+                    method: 'GET',
+                    endpoint: this.ENDPOINT,
+                    textQuery,
+                    languageQuery,
+                    sourcesQuery,
+                    apiKey: this.API_KEY,
+                }).then(({ articles }) => {
                     document.querySelector('.spinner').classList.toggle('hide')
                     response = articles
                     bindedRenderCardList(response)
@@ -59,10 +66,12 @@ export default class Header {
             } catch (e) {
                 response = []
                 bindedRenderCardList(response)
+                // throw e
+                this.showErrorPopup()
             }
         }
 
-        request()
+        request.bind(this)()
     }
 
     renderCardList(articlesCollection) {
@@ -90,6 +99,16 @@ export default class Header {
     extractDate(dateStr) {
         if (dateStr) return new Date(dateStr).toLocaleDateString().replace(/\//g, '-')
         return false
+    }
+
+    showErrorPopup() {
+        import('error-popup').then(errorInstance => {
+
+            this.errorPopup = new errorInstance.default()
+            this.errorPopup.create()
+            this.errorPopup.showPopUp()
+
+        })
     }
 
     bindEventListeners() {

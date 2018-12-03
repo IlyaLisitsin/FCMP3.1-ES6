@@ -13,7 +13,7 @@ module.exports = (env, arg) => {
         },
         output: {
             path: __dirname +  '/public',
-            publicPath: './',
+            publicPath: isProd ? './' : '/',
             chunkFilename: '[name].js',
             filename: '[name].js'
         },
@@ -78,6 +78,7 @@ module.exports = (env, arg) => {
                 'js': __dirname + '/src/js',
                 'header': __dirname + '/src/js/header',
                 'news-card': __dirname + '/src/js/news-card',
+                'error-popup': __dirname + '/src/js/error-popup',
             },
             extensions: ['.scss', '.js']
         }
